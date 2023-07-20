@@ -17,8 +17,8 @@ trans_item::trans_item(const transcript &t, int c, int s)
 {
 	trst = t;
 	count = c;
-	if(samples.find(s) == samples.end()) samples.insert(make_pair(s, t.coverage));
-	else if(samples[s] < t.coverage) samples[s] = t.coverage;
+	if(samples.find(s) == samples.end()) samples.insert(make_pair(s, t));
+	else if(samples[s].coverage < t.coverage) samples[s].coverage = t.coverage;
 }
 
 int trans_item::merge(const trans_item &ti, int mode)
@@ -34,7 +34,7 @@ int trans_item::merge(const trans_item &ti, int mode)
 		for(auto &x : ti.samples)
 		{
 			if(samples.find(x.first) == samples.end()) samples.insert(x);
-			else if(samples[x.first] < x.second) samples[x.first] = x.second;
+			else if(samples[x.first].coverage < x.second.coverage) samples[x.first].coverage = x.second.coverage;
 		}
 		//samples.insert(ti.samples.begin(), ti.samples.end());
 	}
